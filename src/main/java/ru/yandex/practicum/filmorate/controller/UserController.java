@@ -18,7 +18,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-   static int createdId;
+    static int createdId;
 
     private static Map<Integer, User> users = new HashMap<>();
 
@@ -26,32 +26,33 @@ public class UserController {
     public User addUser(@Valid @RequestBody User user) {
         user.setId(++createdId);
         log.info("Поступил Пост запрос на создание пользователя");
-        if(users.containsKey(user.getId())){
+        if (users.containsKey(user.getId())) {
             log.warn("Данный пользователь уже существует");
             throw new ValidationException("Невозможно добавить уже существующего пользователя");
         }
-        if(user.getName()==null||user.getName().isBlank()){
+        if (user.getName() == null || user.getName().isBlank()) {
             user.setName(user.getLogin());
         }
 
         log.info("Юзер успешно добавлен");
-        users.put(user.getId(),user);
+        users.put(user.getId(), user);
         return user;
     }
+
     @PutMapping
-    public  User updateUser(@Valid @RequestBody User user) {
-        if (!(users.containsKey(user.getId()))){
+    public User updateUser(@Valid @RequestBody User user) {
+        if (!(users.containsKey(user.getId()))) {
             log.warn("Невозможно обновить неизвестный юзер");
             throw new ValidationException("Невозможно обновить неизвестный юзер");
         }
-        users.put(user.getId(),user);
+        users.put(user.getId(), user);
         return user;
     }
+
     @GetMapping
-    public  List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         return new ArrayList<>(users.values());
     }
-
 
 
 }
