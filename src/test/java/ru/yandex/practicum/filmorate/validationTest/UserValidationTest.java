@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import org.springframework.validation.annotation.Validated;
-import ru.yandex.practicum.filmorate.controller.UserController;
+
 import ru.yandex.practicum.filmorate.model.User;
 
 import javax.validation.*;
@@ -19,7 +19,6 @@ import java.util.Set;
 @Validated
 public class UserValidationTest {
 
-    UserController userController = new UserController();
 
     ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
     Validator validator = validatorFactory.usingContext().getValidator();
@@ -67,11 +66,12 @@ public class UserValidationTest {
         Set validatored = validator.validate(user1);
         assertTrue(validatored.size() == 1);
     }
+
     @Test
     public void shouldThrowExceptionNullLogin() {
         User user1 = new User("roma@mail.ru", LocalDate.of(2020, 12, 1));
         user1.setLogin(null);
-        assertThrows(Throwable.class,()->{
+        assertThrows(Throwable.class, () -> {
             validator.validate(user1);
         });
     }
