@@ -22,10 +22,14 @@ public class FilmController {
 
     private static Map<Integer, Film> films = new HashMap<>();
 
+    public static int generateID() {
+        return ++createdId;
+    }
+
     @PostMapping
-    public static Film addFilm(@Valid @RequestBody Film film) {
+    public Film addFilm(@Valid @RequestBody Film film) {
         log.info("Поступил Роst запрос /film");
-        film.setId(++createdId);
+        film.setId(generateID());
         if (films.containsKey(film.getId())) {
             log.warn("Данный Фильм уже существует");
             throw new ValidationException("Невозможно добавить уже существующий фильм");
@@ -38,7 +42,7 @@ public class FilmController {
     }
 
     @PutMapping
-    public static Film updateFilm(@Valid @RequestBody Film film) {
+    public Film updateFilm(@Valid @RequestBody Film film) {
         log.info("Поступил Рut запрос /film");
         if (!(films.containsKey(film.getId()))) {
             log.warn("Невозможно обновить неизвестный film");
@@ -50,7 +54,7 @@ public class FilmController {
     }
 
     @GetMapping
-    public static List<Film> getAllFilms() {
+    public List<Film> getAllFilms() {
         return new ArrayList<>(films.values());
     }
 

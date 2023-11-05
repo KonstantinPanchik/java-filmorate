@@ -22,9 +22,13 @@ public class UserController {
 
     private static Map<Integer, User> users = new HashMap<>();
 
+    public static int generateID() {
+        return ++createdId;
+    }
+
     @PostMapping
     public User addUser(@Valid @RequestBody User user) {
-        user.setId(++createdId);
+        user.setId(generateID());
         log.info("Поступил Пост запрос на создание пользователя");
         if (users.containsKey(user.getId())) {
             log.warn("Данный пользователь уже существует");
