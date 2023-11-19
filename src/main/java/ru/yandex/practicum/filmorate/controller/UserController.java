@@ -2,61 +2,88 @@ package ru.yandex.practicum.filmorate.controller;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.filmorate.exceptions.ValidationException;
+import ru.yandex.practicum.filmorate.exceptions.UserNotFoundException;
 import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.servise.UserService;
+import ru.yandex.practicum.filmorate.storage.UserStorage;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
+
 
 @Validated
 @Slf4j
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    static int createdId;
 
-    private static Map<Integer, User> users = new HashMap<>();
+    UserStorage userStorage;
+    UserService userService;
 
-    public static int generateID() {
-        return ++createdId;
+    @Autowired
+    public UserController(UserStorage userStorage, UserService userService) {
+        this.userStorage = userStorage;
+        this.userService = userService;
     }
 
     @PostMapping
     public User addUser(@Valid @RequestBody User user) {
-        user.setId(generateID());
-        log.info("Поступил Пост запрос на создание пользователя");
-        if (users.containsKey(user.getId())) {
-            log.warn("Данный пользователь уже существует");
-            throw new ValidationException("Невозможно добавить уже существующего пользователя");
-        }
-        if (user.getName() == null || user.getName().isBlank()) {
-            user.setName(user.getLogin());
-        }
-
-        log.info("Юзер успешно добавлен");
-        users.put(user.getId(), user);
-        return user;
+        return userStorage.addUser(user);
     }
 
     @PutMapping
     public User updateUser(@Valid @RequestBody User user) {
-        if (!(users.containsKey(user.getId()))) {
-            log.warn("Невозможно обновить неизвестный юзер");
-            throw new ValidationException("Невозможно обновить неизвестный юзер");
-        }
-        users.put(user.getId(), user);
-        return user;
+        return userStorage.updateUser(user);
     }
 
     @GetMapping
     public List<User> getAllUsers() {
-        return new ArrayList<>(users.values());
+        return userStorage.getAllUsers();
     }
 
+    @GetMapping("/{id}")
+    public User getUser(@PathVariable Long id) {
+        User result = userStorage.getUserById(id);
+        return result;
+    }
+
+    @PutMapping("/{id}/friends/{friendId}")
+    public User addFriend(@PathVariable Long id, @PathVariable Long friendId) {
+        User user = userStorage.getUserById(id);
+        User friend = userStorage.getUserById(friendId);
+        userService.addFriend(user, friend);
+        return user;
+    }
+
+    @DeleteMapping("/{id}/friends/{friendId}")
+    public User deleteFriend(@PathVariable Long id, @PathVariable Long friendId) {
+        User user = userStorage.getUserById(id);
+        User friend = userStorage.getUserById(friendId);
+        userService.removeFriend(user, friend);
+        return user;
+    }
+
+    @GetMapping("/{id}/friends")
+    public List<User> getFriend(@PathVariable Long id) {
+        return userService.getFriends(userStorage.getUserById(id), userStorage);
+    }
+
+    @GetMapping("/{id}/friends/common/{otherId}")//GET /users/{id}/friends/common/{otherId}
+    public List<User> getCommonFriends(@PathVariable Long id, @PathVariable Long otherId) {
+        User user = userStorage.getUserById(id);
+        User friend = userStorage.getUserById(otherId);
+        return userService.getMutualFriends(user, friend, userStorage);
+    }
+
+//    @ExceptionHandler
+//    @ResponseStatus(HttpStatus.NOT_FOUND)
+//    public R handleUserNotFound(final UserNotFoundException e){
+//        return e.getMessage();
+//    }
 
 }
