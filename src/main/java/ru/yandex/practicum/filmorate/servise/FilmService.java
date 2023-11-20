@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.FilmStorage;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,9 +16,10 @@ import java.util.stream.Collectors;
 public class FilmService {
 
     FilmStorage filmStorage;
+
     @Autowired
-    public FilmService(FilmStorage filmStorage){
-        this.filmStorage=filmStorage;
+    public FilmService(FilmStorage filmStorage) {
+        this.filmStorage = filmStorage;
     }
 
     public boolean putLike(@NonNull User user, @NonNull Film film) {
