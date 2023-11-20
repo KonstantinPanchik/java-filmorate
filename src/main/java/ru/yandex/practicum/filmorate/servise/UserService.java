@@ -1,7 +1,9 @@
 package ru.yandex.practicum.filmorate.servise;
 
 
+import lombok.Data;
 import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
@@ -12,7 +14,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Data
 public class UserService {
+
+    @NonNull
+    UserStorage userStorage;
+
+    @Autowired
+    public UserService(UserStorage userStorage) {
+        this.userStorage = userStorage;
+    }
 
     public boolean addFriend(@NonNull User user, @NonNull User friend) {
         user.getFriends().add(friend.getId());
@@ -26,7 +37,7 @@ public class UserService {
         return true;
     }
 
-    public List<User> getMutualFriends(@NonNull User user, @NotNull User friend, @NotNull UserStorage userStorage) {
+    public List<User> getMutualFriends(@NonNull User user, @NotNull User friend) {
         List<Long> mutualFriends = new ArrayList<>(user.getFriends());
         mutualFriends.retainAll(friend.getFriends());
 
@@ -34,8 +45,8 @@ public class UserService {
                 userStorage.getUserById(l)).collect(Collectors.toList());
     }
 
-    public List<User> getFriends(@NonNull User user, @NonNull UserStorage userStorage) {
-        List<User> result = user.getFriends().stream()
+    public List<User> getFriends(@NonNull Long id) {
+        List<User> result = userStorage.getUserById(id).getFriends().stream()
                 .map(f -> userStorage.getUserById(f))
                 .collect(Collectors.toList());
         return result;

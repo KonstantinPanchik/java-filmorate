@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import java.util.Map;
 
 @ControllerAdvice
-public class ExceptionController {
+public class ErrorHandler {
 
     @ExceptionHandler
     public ResponseEntity<Map<String, String>> handleHappinessOverflow(final UserNotFoundException e) {
@@ -21,6 +21,11 @@ public class ExceptionController {
     @ExceptionHandler
     public ResponseEntity<Map<String, String>> handleFilmNotFound(final FilmNotFoundException e) {
         return new ResponseEntity<>(Map.of("Film", e.getMessage()), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<Map<String,String>> handleOtherThroable(Throwable e){
+        return new ResponseEntity<>(Map.of(e.getClass().toString(),e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

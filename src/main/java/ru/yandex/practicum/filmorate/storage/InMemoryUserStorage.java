@@ -20,7 +20,7 @@ public class InMemoryUserStorage implements UserStorage {
 
     private static Map<Long, User> users = new HashMap<>();
 
-    public static int generateID() {
+    private static int generateID() {
         return ++createdId;
     }
 

@@ -19,7 +19,7 @@ public class InMemoryFilmStorage implements FilmStorage {
 
     private static Map<Long, Film> films = new HashMap<>();
 
-    public static int generateId() {
+    private static int generateId() {
         return ++createdId;
     }
 
