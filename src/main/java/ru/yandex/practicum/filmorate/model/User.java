@@ -8,12 +8,16 @@ import ru.yandex.practicum.filmorate.validators.NotSpace;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
+
 import java.time.LocalDate;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 public class User {
 
-    int id;
+    long id;
     @NonNull @Email(message = "Неверно задан имэйл")
     String email;
     @NotNull
@@ -24,6 +28,8 @@ public class User {
     @NonNull
     @PastOrPresent(message = "Дата рождения не может быть после текущего числа")
     LocalDate birthday;
+
+    Set<Long> friends = new HashSet<>();
 
 
 }
