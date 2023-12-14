@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.servise.FilmService;
-import ru.yandex.practicum.filmorate.servise.UserService;
 
 import javax.validation.Valid;
 
@@ -53,13 +52,13 @@ FilmController {
     @PutMapping("/{id}/like/{userId}")
     public Film putLike(@PathVariable long id, @PathVariable long userId) {
 
-        return filmService.putLike(userId,id);
+        return filmService.putLike(userId, id);
 
     }
 
     @DeleteMapping("/{id}/like/{userId}")
     public Film deleteLike(@PathVariable long id, @PathVariable long userId) {
-        return filmService.removeLike(userId,id);
+        return filmService.removeLike(userId, id);
     }
 
     @GetMapping("/popular")
