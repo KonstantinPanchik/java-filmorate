@@ -191,8 +191,8 @@ public class UserDbStorage implements UserStorage {
     }
 
     private User makeUser(ResultSet resultSet) throws SQLException {
-        User user = new User(resultSet.getString("email")
-                , LocalDate.parse(resultSet.getString("birthday")));
+        User user = new User(resultSet.getString("email"),
+                LocalDate.parse(resultSet.getString("birthday")));
         user.setName(resultSet.getString("name"));
         user.setLogin(resultSet.getString("login"));
         user.setId(resultSet.getLong("user_id"));
