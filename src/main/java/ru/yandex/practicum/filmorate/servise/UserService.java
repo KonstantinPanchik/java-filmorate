@@ -32,20 +32,20 @@ public class UserService {
     }
 
 
-    public FriendStatus addFriend(@NonNull long userId, @NonNull long friend_id) {
-        if (userId == friend_id) {
+    public FriendStatus addFriend(@NonNull long userId, @NonNull long friendId) {
+        if (userId == friendId) {
             throw new SameIdException("Вы не можете добавить в друзья сами себя!!");
         }
-        return userStorage.addFriend(userId, friend_id);
+        return userStorage.addFriend(userId, friendId);
     }
 
-    public boolean removeFriend(@NonNull long user_id, @NonNull long friend_id) {
+    public boolean removeFriend(@NonNull long userId, @NonNull long friendId) {
 
-        return userStorage.deleteFriend(user_id, friend_id);
+        return userStorage.deleteFriend(userId, friendId);
     }
 
-    public List<User> getMutualFriends(@NonNull Long user_id, @NotNull Long friend_id) {
-        return userStorage.getMutualFriends(user_id, friend_id);
+    public List<User> getMutualFriends(@NonNull Long userId, @NotNull Long friendId) {
+        return userStorage.getMutualFriends(userId, friendId);
     }
 
     public List<User> getFriends(@NonNull Long id) {
