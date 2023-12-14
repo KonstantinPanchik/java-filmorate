@@ -30,6 +30,7 @@ public class MpaController {
     public List<MPA> getAllGenre() {
         return mpaServise.getAllMpa();
     }
+
     @GetMapping("/{id}")
     public MPA getGenreById(@PathVariable Integer id) {
         return mpaServise.getMpaById(id);
