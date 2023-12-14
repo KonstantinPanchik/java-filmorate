@@ -38,8 +38,8 @@ public class GenreDbStorage {
         try {
             Genre genre = jdbcTemplate.queryForObject(sql, (rs, rownum) -> makeGenre(rs), id);
             return genre;
-        }catch (EmptyResultDataAccessException e){
-            throw new GenreNotFoundException("Жанр с id = "+id+" не найден!");
+        } catch (EmptyResultDataAccessException e) {
+            throw new GenreNotFoundException("Жанр с id = " + id + " не найден!");
         }
     }
 

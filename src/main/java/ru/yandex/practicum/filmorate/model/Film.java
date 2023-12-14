@@ -32,7 +32,7 @@ public class Film {
 
     MPA mpa;
 
-    List<Genre> genres= new ArrayList<>();
+    List<Genre> genres = new ArrayList<>();
 
 
 }

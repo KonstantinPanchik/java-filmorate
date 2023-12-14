@@ -32,9 +32,9 @@ public class UserDbStorage implements UserStorage {
 
     @Override
     public User updateUser(User user) {
-       if(updateUserInDb(user)==0){
-           throw new UserNotFoundException("Пользователь не найден");
-       }
+        if (updateUserInDb(user) == 0) {
+            throw new UserNotFoundException("Пользователь не найден");
+        }
         return getUserFromDbById(user.getId());
     }
 

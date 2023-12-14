@@ -25,7 +25,7 @@ public class UserService {
     UserStorage userStorage;
 
     public User addUser(User user) {
-        if (user.getName()==null||user.getName().isBlank()){
+        if (user.getName() == null || user.getName().isBlank()) {
             user.setName(user.getLogin());
         }
         return userStorage.addUser(user);
@@ -33,10 +33,10 @@ public class UserService {
 
 
     public FriendStatus addFriend(@NonNull long userId, @NonNull long friend_id) {
-        if (userId==friend_id){
+        if (userId == friend_id) {
             throw new SameIdException("Вы не можете добавить в друзья сами себя!!");
         }
-            return userStorage.addFriend(userId, friend_id);
+        return userStorage.addFriend(userId, friend_id);
     }
 
     public boolean removeFriend(@NonNull long user_id, @NonNull long friend_id) {

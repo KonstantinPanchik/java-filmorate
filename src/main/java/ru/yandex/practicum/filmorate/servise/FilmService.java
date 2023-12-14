@@ -20,11 +20,11 @@ public class FilmService {
     FilmStorage filmStorage;
 
     public Film putLike(@NonNull long userId, @NonNull long filmId) {
-        return filmStorage.putLike(userId,filmId);
+        return filmStorage.putLike(userId, filmId);
     }
 
     public Film removeLike(@NonNull long userId, @NonNull long filmId) {
-        return filmStorage.deleteLike(userId,filmId);
+        return filmStorage.deleteLike(userId, filmId);
     }
 
     public List<Film> topFilms(int limit) {
@@ -33,7 +33,7 @@ public class FilmService {
 
     }
 
-    public Film getFilmById(long id){
+    public Film getFilmById(long id) {
         return filmStorage.getFilmById(id);
     }
 

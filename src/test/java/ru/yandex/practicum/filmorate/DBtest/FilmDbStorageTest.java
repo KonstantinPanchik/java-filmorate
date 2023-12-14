@@ -17,8 +17,10 @@ import ru.yandex.practicum.filmorate.storage.FilmDbStorage;
 
 
 import java.time.LocalDate;
-import java.util.HashSet;
+import java.util.ArrayList;
 
+
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -33,9 +35,8 @@ public class FilmDbStorageTest {
     private final JdbcTemplate jdbcTemplate;
 
 
-
     @BeforeEach
-    public  void prepare() {
+    public void prepare() {
 
         jdbcTemplate.update("MERGE INTO film(film_id,name,description,duration,release_date,mpa_id)\n" +
                 "VALUES(2,'Ёлки','Новый год чудесный',90,'2020-12-31',1),\n" +
@@ -59,7 +60,7 @@ public class FilmDbStorageTest {
         mpa1.setId(1);
         film1.setMpa(mpa1);
 
-        Set<Genre> genres1 = new HashSet<>();
+        List<Genre> genres1 = new ArrayList<>();
         for (int i = 1; i < 6; i++) {
             Genre genre = new Genre();
             genre.setId(i);
@@ -97,7 +98,7 @@ public class FilmDbStorageTest {
         mpa1.setId(1);
         newFilm.setMpa(mpa1);
 
-        Set<Genre> genres1 = new HashSet<>();
+        List<Genre> genres1 = new ArrayList<>();
         for (int i = 1; i < 6; i++) {
             Genre genre = new Genre();
             genre.setId(i);

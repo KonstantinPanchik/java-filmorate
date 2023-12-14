@@ -8,7 +8,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import ru.yandex.practicum.filmorate.exceptions.DeletionException;
-import ru.yandex.practicum.filmorate.model.FriendStatus;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.servise.UserService;
 
@@ -55,15 +54,14 @@ public class UserController {
     @PutMapping("/{id}/friends/{friendId}")
     public String addFriend(@PathVariable Long id, @PathVariable Long friendId) {
         return userService.addFriend(id, friendId).toString();
-
     }
 
     @DeleteMapping("/{id}/friends/{friendId}")
     public String deleteFriend(@PathVariable Long id, @PathVariable Long friendId) {
 
-        if (userService.removeFriend(id, friendId)){
-            return "Пользователь с id = "+friendId+" успешно удалён";
-        }else {
+        if (userService.removeFriend(id, friendId)) {
+            return "Пользователь с id = " + friendId + " успешно удалён";
+        } else {
             throw new DeletionException("Ошибка удаления пользователя!!!");
         }
 

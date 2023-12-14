@@ -39,8 +39,8 @@ public class MpaDbStorage {
         try {
             MPA mpa = jdbcTemplate.queryForObject(sql, (rs, rownum) -> makeMpa(rs), id);
             return mpa;
-        }catch (EmptyResultDataAccessException e){
-            throw new MpaNotFoundException("Жанр с id = "+id+" не найден!");
+        } catch (EmptyResultDataAccessException e) {
+            throw new MpaNotFoundException("Жанр с id = " + id + " не найден!");
         }
     }
 

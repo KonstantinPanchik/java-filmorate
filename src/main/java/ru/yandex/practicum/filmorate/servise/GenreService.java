@@ -15,18 +15,17 @@ public class GenreService {
     GenreDbStorage genreDbStorage;
 
     @Autowired
-    GenreService(GenreDbStorage genreDbStorage){
-        this.genreDbStorage=genreDbStorage;
+    GenreService(GenreDbStorage genreDbStorage) {
+        this.genreDbStorage = genreDbStorage;
     }
 
-    public List<Genre> getAllGenres(){
+    public List<Genre> getAllGenres() {
         return genreDbStorage.getAllGenreFromDb();
     }
 
-    public Genre getGenreById(int id){
+    public Genre getGenreById(int id) {
         return genreDbStorage.getGenreFromDb(id);
     }
-
 
 
 }
