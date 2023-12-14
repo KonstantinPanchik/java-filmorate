@@ -109,11 +109,11 @@ public class FilmDbStorage implements FilmStorage {
         String sql = "INSERT INTO film(name,description,release_date,duration,mpa_id)" +
                 "VALUES(?,?,?,?,?)";
 
-        int amount = jdbcTemplate.update(sql, film.getName()
-                , film.getDescription()
-                , film.getReleaseDate().toString()
-                , film.getDuration()
-                , film.getMpa().getId());
+        int amount = jdbcTemplate.update(sql, film.getName(),
+                film.getDescription(),
+                film.getReleaseDate().toString(),
+                film.getDuration(),
+                film.getMpa().getId());
 
     }
 
@@ -121,12 +121,12 @@ public class FilmDbStorage implements FilmStorage {
         String sql = "UPDATE film SET NAME = ?, description = ?, release_date = ? ," +
                 " duration = ?, mpa_id = ? WHERE film_id = ? ;";
 
-        int result = jdbcTemplate.update(sql, film.getName()
-                , film.getDescription()
-                , film.getReleaseDate().toString()
-                , film.getDuration()
-                , film.getMpa().getId()
-                , film.getId());
+        int result = jdbcTemplate.update(sql, film.getName(),
+                film.getDescription(),
+                film.getReleaseDate().toString(),
+                film.getDuration(),
+                film.getMpa().getId(),
+                film.getId());
         return result;
     }
 
@@ -172,8 +172,8 @@ public class FilmDbStorage implements FilmStorage {
     }
 
     private Film makeFilm(ResultSet resultSet) throws SQLException {
-        Film result = new Film(resultSet.getString("name")
-                , LocalDate.parse(resultSet.getString("release_date")));
+        Film result = new Film(resultSet.getString("name"),
+                LocalDate.parse(resultSet.getString("release_date")));
 
         result.setId(resultSet.getLong("film_id"));
         result.setDuration(resultSet.getInt("duration"));
