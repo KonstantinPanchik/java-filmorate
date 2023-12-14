@@ -63,4 +63,23 @@ public class InMemoryFilmStorage implements FilmStorage {
     public List<Film> getAllFilms() {
         return new ArrayList<>(films.values());
     }
+
+    @Override
+    public List<Film> getTopFilms(int limit) {
+//      return getAllFilms().stream()
+//                .sorted(((f1, f2) -> f2.getLikes().size() - f1.getLikes().size()))// .sorted(((f1, f2) -> f1.getLikes().size() - f2.getLikes().size()))
+//                .limit(limit).collect(Collectors.toList());
+        return null;
+    }
+
+
+    @Override
+    public Film putLike(long userId, long filmId) {
+        return null;
+    }
+
+    @Override
+    public Film deleteLike(long userId, long filmId) {
+        return null;
+    }
 }

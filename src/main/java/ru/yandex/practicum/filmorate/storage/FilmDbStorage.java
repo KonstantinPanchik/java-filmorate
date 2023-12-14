@@ -2,7 +2,6 @@ package ru.yandex.practicum.filmorate.storage;
 
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.exceptions.FilmNotFoundException;
@@ -23,13 +22,12 @@ import java.util.stream.Collectors;
 
 
 @Slf4j
-@Primary//заменить на квалифаер
 @Component
-public class FilmDbStorage2 implements FilmStorage {
+public class FilmDbStorage implements FilmStorage {
 
     JdbcTemplate jdbcTemplate;
 
-    public FilmDbStorage2(JdbcTemplate jdbcTemplate) {
+    public FilmDbStorage(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 

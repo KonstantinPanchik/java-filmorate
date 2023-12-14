@@ -4,7 +4,10 @@ package ru.yandex.practicum.filmorate.servise;
 import lombok.Data;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import ru.yandex.practicum.filmorate.exceptions.SameIdException;
+import ru.yandex.practicum.filmorate.model.FriendStatus;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
 
@@ -17,38 +20,36 @@ import java.util.stream.Collectors;
 @Data
 public class UserService {
 
-    @NonNull
+    @Autowired
+    @Qualifier("userDbStorage")
     UserStorage userStorage;
 
-    @Autowired
-    public UserService(UserStorage userStorage) {
-        this.userStorage = userStorage;
+    public User addUser(User user) {
+        if (user.getName()==null||user.getName().isBlank()){
+            user.setName(user.getLogin());
+        }
+        return userStorage.addUser(user);
     }
 
-    public boolean addFriend(@NonNull User user, @NonNull User friend) {
-        user.getFriends().add(friend.getId());
-        friend.getFriends().add(user.getId());
-        return true;
+
+    public FriendStatus addFriend(@NonNull long userId, @NonNull long friend_id) {
+        if (userId==friend_id){
+            throw new SameIdException("Вы не можете добавить в друзья сами себя!!");
+        }
+            return userStorage.addFriend(userId, friend_id);
     }
 
-    public boolean removeFriend(@NonNull User user, @NonNull User friend) {
-        user.getFriends().remove(friend.getId());
-        friend.getFriends().remove(user.getId());
-        return true;
+    public boolean removeFriend(@NonNull long user_id, @NonNull long friend_id) {
+
+        return userStorage.deleteFriend(user_id, friend_id);
     }
 
-    public List<User> getMutualFriends(@NonNull User user, @NotNull User friend) {
-        List<Long> mutualFriends = new ArrayList<>(user.getFriends());
-        mutualFriends.retainAll(friend.getFriends());
-
-        return mutualFriends.stream().map(l ->
-                userStorage.getUserById(l)).collect(Collectors.toList());
+    public List<User> getMutualFriends(@NonNull Long user_id, @NotNull Long friend_id) {
+        return userStorage.getMutualFriends(user_id, friend_id);
     }
 
     public List<User> getFriends(@NonNull Long id) {
-        List<User> result = userStorage.getUserById(id).getFriends().stream()
-                .map(f -> userStorage.getUserById(f))
-                .collect(Collectors.toList());
-        return result;
+
+        return userStorage.getFriends(id);
     }
 }

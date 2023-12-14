@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.exceptions.UserNotFoundException;
 import ru.yandex.practicum.filmorate.exceptions.ValidationException;
+import ru.yandex.practicum.filmorate.model.FriendStatus;
 import ru.yandex.practicum.filmorate.model.User;
 
 import java.util.ArrayList;
@@ -67,4 +68,25 @@ public class InMemoryUserStorage implements UserStorage {
         }
         return user;
     }
+
+    @Override
+    public FriendStatus addFriend(long userId, long friendId) {
+        return FriendStatus.NOT_ACCEPTED;
+    }
+
+    @Override
+    public boolean deleteFriend(long userId, long friendId) {
+        return false;
+    }
+
+    @Override
+    public List<User> getMutualFriends(long userId, long userCompareWith) {
+        return null;
+    }
+
+    @Override
+    public List<User> getFriends(long userId) {
+        return null;
+    }
 }
+
