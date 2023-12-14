@@ -153,11 +153,11 @@ public class UserDbStorage implements UserStorage {
     private void addUserInDb(User user) {
         String sql = "INSERT INTO users (name,email,login,birthday) " +
                 " values(?,?,?,?);";
-        int a = jdbcTemplate.update(sql
-                , user.getName()
-                , user.getEmail()
-                , user.getLogin()
-                , user.getBirthday());
+        int a = jdbcTemplate.update(sql,
+                user.getName(),
+                user.getEmail(),
+                user.getLogin(),
+                user.getBirthday());
     }
 
     private List<User> getAllUsersFromDb() {
@@ -169,12 +169,12 @@ public class UserDbStorage implements UserStorage {
     private int updateUserInDb(User user) {
         String sql = "UPDATE users SET  email = ?, login = ?, name = ?, birthday = ? " +
                 "  WHERE user_id = ? ;";
-        int result = jdbcTemplate.update(sql
-                , user.getEmail()
-                , user.getLogin()
-                , user.getName()
-                , user.getBirthday()
-                , user.getId());
+        int result = jdbcTemplate.update(sql,
+                user.getEmail(),
+                user.getLogin(),
+                user.getName(),
+                user.getBirthday(),
+                user.getId());
         return result;
     }
 
