@@ -10,8 +10,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Data
 public class Film {
@@ -28,5 +29,9 @@ public class Film {
     @Positive
     int duration;
 
-    Set<Long> likes = new HashSet<>();
+    MPA mpa;
+
+    List<Genre> genres = new ArrayList<>();
+
+
 }
